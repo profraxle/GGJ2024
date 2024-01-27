@@ -130,4 +130,7 @@ void APlayerCharacter::OnComponentHit(UPrimitiveComponent* HitComp, AActor* Othe
 			itemTouched = OtherActor;
 		}
 	}
+	else {
+		itemTouched = nullptr;
+	}
 }

@@ -32,6 +32,9 @@ public:
 	USceneComponent* myPlayerAttachPoint;	//The Players Attach Point
 	AActor* myCart;							//The Cart
 
+	bool isBeingCarried = false;
+
 	float cartHeight;
-	bool care;
+	bool care = true;
+	bool getHeight = true;
 };
