@@ -2,9 +2,7 @@
 
 #include "PlayerCharacter.h"
 #include "Components/PrimitiveComponent.h"
-#include "PickupObject.h"
 #include "EnhancedInputComponent.h"
-#include "Engine/GameEngine.h"
 #include "Components/CapsuleComponent.h"
 #include "EnhancedInputSubsystems.h"
 
@@ -26,10 +24,6 @@ APlayerCharacter::APlayerCharacter()
 	CollisionBox->SetupAttachment(RootComponent);
 	CollisionBox->SetRelativeLocation(FVector(0.0f, 0.0f, 0.0f));
 
-	AttachPoint = CreateDefaultSubobject<USceneComponent>(TEXT("Attach Point"));
-	AttachPoint->SetupAttachment(RootComponent);
-	AttachPoint->SetRelativeLocation(FVector(-50.f, 0.0f, 0.0f));
-
 }
 
 // Called when the game starts or when spawned
@@ -45,13 +39,15 @@ void APlayerCharacter::BeginPlay()
 			Subsystem->AddMappingContext(playerMappingContext, 0);
 		}
 	}
+
+
+
 }
 
 // Called every frame
 void APlayerCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
 }
 
 void APlayerCharacter::Move(const FInputActionValue& Value)
@@ -63,29 +59,9 @@ void APlayerCharacter::Move(const FInputActionValue& Value)
 	{
 		//Add Movement
 		movementVector.Normalize();
-		AddMovementInput(FVector(1.0f,0.0f,0.0f), (movementVector.Y * 0.5f));
-		AddMovementInput(FVector(0.0f, 1.0f, 0.0f), (movementVector.X * 0.5f));
+		AddMovementInput(GetActorForwardVector(), (movementVector.Y * 0.5f));
+		AddMovementInput(GetActorRightVector(), (movementVector.X * 0.5f));
 	}
-}
-
-void APlayerCharacter::Grab(const FInputActionValue& Value)
-{
-	const bool tryingToGrab = Value.Get<bool>();
-
-	if (itemTouched && tryingToGrab)
-	{
-		APickupObject* item = Cast<APickupObject>(itemTouched);
-		if (item->myPlayer == nullptr && !holdingObject)
-		{
-			item->myPlayerAttachPoint = AttachPoint;
-			item->myPlayer = this;
-			holdingObject = true;
-		}
-	}
-}
-
-void APlayerCharacter::Drop(const FInputActionValue& Value)
-{
 }
 
 // Called to bind functionality to input
@@ -96,10 +72,6 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 	if (UEnhancedInputComponent* EnhancedInputComponenet = CastChecked<UEnhancedInputComponent>(PlayerInputComponent))
 	{
 		EnhancedInputComponenet->BindAction(moveAction, ETriggerEvent::Triggered, this, &APlayerCharacter::Move);
-
-		EnhancedInputComponenet->BindAction(grabAction, ETriggerEvent::Started, this, &APlayerCharacter::Grab);
-
-		EnhancedInputComponenet->BindAction(dropAction, ETriggerEvent::Started, this, &APlayerCharacter::Drop);
 	}
 }
 
@@ -108,9 +80,11 @@ void APlayerCharacter::OnComponentHit(UPrimitiveComponent* HitComp, AActor* Othe
 {
 	if (OtherActor)
 	{
+		OtherActor->Destroy();
 		if (OtherActor->ActorHasTag("Item"))
 		{
-			itemTouched = OtherActor;
+			
+			OtherActor->Destroy();
 		}
 	}
 }
