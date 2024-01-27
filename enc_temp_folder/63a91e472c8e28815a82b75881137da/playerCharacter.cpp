@@ -2,7 +2,6 @@
 
 #include "PlayerCharacter.h"
 #include "Components/PrimitiveComponent.h"
-#include "PickupObject.h"
 #include "EnhancedInputComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "EnhancedInputSubsystems.h"
@@ -24,10 +23,6 @@ APlayerCharacter::APlayerCharacter()
 	//Finish collision box setup
 	CollisionBox->SetupAttachment(RootComponent);
 	CollisionBox->SetRelativeLocation(FVector(0.0f, 0.0f, 0.0f));
-
-	AttachPoint = CreateDefaultSubobject<USceneComponent>(TEXT("Attach Point"));
-	AttachPoint->SetupAttachment(RootComponent);
-	AttachPoint->SetRelativeLocation(FVector(-50.f, 0.0f, 0.0f));
 
 }
 
@@ -85,15 +80,11 @@ void APlayerCharacter::OnComponentHit(UPrimitiveComponent* HitComp, AActor* Othe
 {
 	if (OtherActor)
 	{
+		OtherActor->Destroy();
 		if (OtherActor->ActorHasTag("Item"))
 		{
-			APickupObject* item = Cast<APickupObject>(OtherActor);
-			if (item->myPlayer == nullptr)
-			{
-				item->myPlayerAttachPoint = AttachPoint;
-				item->myPlayer = this;
-			}
-			//OtherActor->Destroy();
+			
+			OtherActor->Destroy();
 		}
 	}
 }

@@ -7,7 +7,6 @@
 #include "InputActionValue.h"
 #include "InputAction.h"
 #include "Components/BoxComponent.h"
-#include "Engine/StaticMesh.h"
 #include "Camera/CameraActor.h"
 #include "PlayerCharacter.generated.h"
 
@@ -38,13 +37,6 @@ public:
 	//Collision
 	UPROPERTY(EditAnywhere)
 	UBoxComponent* CollisionBox;					//Collision Box
-
-	//Picked Up Item
-	UPROPERTY(EditAnywhere)
-	UStaticMesh* ItemMesh;							//Item Following Player
-
-	UPROPERTY(EditAnywhere)
-	USceneComponent* AttachPoint;			//Where the item will follow		
 
 protected:
 	// Called when the game starts or when spawned
