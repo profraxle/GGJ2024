@@ -1,7 +1,8 @@
 // Copyright 2024 Crows in a Crisis
 
-#include "PlayerCharacter.h"
 #include "PickupObject.h"
+#include "PlayerCharacter.h"
+
 
 // Sets default values
 APickupObject::APickupObject()

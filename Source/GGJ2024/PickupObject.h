@@ -19,8 +19,8 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-	UPROPERTY(EditAnywhere)
-	FString funny;
+//	UPROPERTY(EditAnywhere)
+//	FString funny;
 
 public:	
 	// Called every frame
