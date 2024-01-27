@@ -61,7 +61,9 @@ protected:
 	float dropTime = 2.f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	AActor* itemTouched;
+	AActor* itemTouched = nullptr;
+
+	AActor* heldItem;
 
 public:
 	// Called every frame

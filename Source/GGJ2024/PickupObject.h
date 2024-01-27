@@ -27,6 +27,11 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	//Getting Picked Up
+	UPROPERTY(EditAnywhere)
 	AActor* myPlayer;						//The Player
 	USceneComponent* myPlayerAttachPoint;	//The Players Attach Point
+	AActor* myCart;							//The Cart
+
+	float cartHeight;
+	bool care;
 };

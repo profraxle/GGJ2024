@@ -40,7 +40,6 @@ void APickupObject::Tick(float DeltaTime)
 	//Deposit
 	if (myCart)
 	{
-		SetActorHiddenInGame(true);
 		ACart* cart = Cast<ACart>(myCart);
 		//Attach to Player
 		SetActorLocation(FVector(cart->GetActorLocation().X, cart->GetActorLocation().Y, cart->GetActorLocation().Z + cart->GetHeight()));

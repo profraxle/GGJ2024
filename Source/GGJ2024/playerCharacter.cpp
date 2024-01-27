@@ -51,7 +51,6 @@ void APlayerCharacter::BeginPlay()
 void APlayerCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
 }
 
 void APlayerCharacter::Move(const FInputActionValue& Value)
@@ -70,7 +69,7 @@ void APlayerCharacter::Move(const FInputActionValue& Value)
 
 void APlayerCharacter::Grab(const FInputActionValue& Value)
 {
-	const bool tryingToGrab = Value.Get<bool>();
+	bool tryingToGrab = Value.Get<bool>();
 
 	if (itemTouched && tryingToGrab)
 	{
@@ -79,6 +78,7 @@ void APlayerCharacter::Grab(const FInputActionValue& Value)
 		{
 			item->myPlayerAttachPoint = AttachPoint;
 			item->myPlayer = this;
+			heldItem = item;
 			holdingObject = true;
 		}
 	}
@@ -86,6 +86,23 @@ void APlayerCharacter::Grab(const FInputActionValue& Value)
 
 void APlayerCharacter::Drop(const FInputActionValue& Value)
 {
+	bool dropPressed = Value.Get<bool>();
+	if (dropPressed)
+	{
+		APickupObject* item = Cast<APickupObject>(heldItem);
+		if (holdingObject)
+		{
+			item->myPlayerAttachPoint = nullptr;
+			item->myPlayer = nullptr;
+			heldItem = nullptr;
+			holdingObject = false;
+			dropPressed = false;
+			itemTouched = nullptr;
+		}
+	}
+	else {
+
+	}
 }
 
 // Called to bind functionality to input
