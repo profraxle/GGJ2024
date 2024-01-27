@@ -1,13 +1,16 @@
 {
 	"FileVersion": 3,
-	"EngineAssociation": "{E3C80EE2-4B53-C6FC-4239-429F0559FAA6}",
+	"EngineAssociation": "{BFEFE97D-4207-ADB4-5463-B6AB0D742814}",
 	"Category": "",
 	"Description": "",
 	"Modules": [
 		{
 			"Name": "GGJ2024",
 			"Type": "Runtime",
-			"LoadingPhase": "Default"
+			"LoadingPhase": "Default",
+			"AdditionalDependencies": [
+				"Engine"
+			]
 		}
 	],
 	"Plugins": [
