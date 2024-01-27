@@ -4,6 +4,7 @@
 #include "Components/PrimitiveComponent.h"
 #include "PickupObject.h"
 #include "EnhancedInputComponent.h"
+#include "Engine/GameEngine.h"
 #include "Components/CapsuleComponent.h"
 #include "EnhancedInputSubsystems.h"
 
@@ -44,15 +45,13 @@ void APlayerCharacter::BeginPlay()
 			Subsystem->AddMappingContext(playerMappingContext, 0);
 		}
 	}
-
-
-
 }
 
 // Called every frame
 void APlayerCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
 }
 
 void APlayerCharacter::Move(const FInputActionValue& Value)
@@ -64,9 +63,29 @@ void APlayerCharacter::Move(const FInputActionValue& Value)
 	{
 		//Add Movement
 		movementVector.Normalize();
-		AddMovementInput(GetActorForwardVector(), (movementVector.Y * 0.5f));
-		AddMovementInput(GetActorRightVector(), (movementVector.X * 0.5f));
+		AddMovementInput(FVector(1.0f,0.0f,0.0f), (movementVector.Y * 0.5f));
+		AddMovementInput(FVector(0.0f, 1.0f, 0.0f), (movementVector.X * 0.5f));
 	}
+}
+
+void APlayerCharacter::Grab(const FInputActionValue& Value)
+{
+	const bool tryingToGrab = Value.Get<bool>();
+
+	if (itemTouched && tryingToGrab)
+	{
+		APickupObject* item = Cast<APickupObject>(itemTouched);
+		if (item->myPlayer == nullptr && !holdingObject)
+		{
+			item->myPlayerAttachPoint = AttachPoint;
+			item->myPlayer = this;
+			holdingObject = true;
+		}
+	}
+}
+
+void APlayerCharacter::Drop(const FInputActionValue& Value)
+{
 }
 
 // Called to bind functionality to input
@@ -77,6 +96,10 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 	if (UEnhancedInputComponent* EnhancedInputComponenet = CastChecked<UEnhancedInputComponent>(PlayerInputComponent))
 	{
 		EnhancedInputComponenet->BindAction(moveAction, ETriggerEvent::Triggered, this, &APlayerCharacter::Move);
+
+		EnhancedInputComponenet->BindAction(grabAction, ETriggerEvent::Started, this, &APlayerCharacter::Grab);
+
+		EnhancedInputComponenet->BindAction(dropAction, ETriggerEvent::Started, this, &APlayerCharacter::Drop);
 	}
 }
 
@@ -87,13 +110,7 @@ void APlayerCharacter::OnComponentHit(UPrimitiveComponent* HitComp, AActor* Othe
 	{
 		if (OtherActor->ActorHasTag("Item"))
 		{
-			APickupObject* item = Cast<APickupObject>(OtherActor);
-			if (item->myPlayer == nullptr && !holdingObject)
-			{
-				item->myPlayerAttachPoint = AttachPoint;
-				item->myPlayer = this;
-				holdingObject = true;
-			}
+			itemTouched = OtherActor;
 		}
 	}
 }

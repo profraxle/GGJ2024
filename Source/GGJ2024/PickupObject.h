@@ -19,17 +19,14 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+	UPROPERTY(EditAnywhere)
+	FString funny;
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	//Tags
-	//UPROPERTY(EditAnywhere, BlueprintReadWrite, AdvancedDisplay, Category=Actor)
-	//TArray<FName> Tags;
-	
-	//Player picking me up
-	AActor* myPlayer;
-	USceneComponent* myPlayerAttachPoint;
-
-	bool canBePickedUp = true;
+	//Getting Picked Up
+	AActor* myPlayer;						//The Player
+	USceneComponent* myPlayerAttachPoint;	//The Players Attach Point
 };

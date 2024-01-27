@@ -21,8 +21,11 @@ void APickupObject::BeginPlay()
 void APickupObject::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
+	//If im picked up
 	if (myPlayer)
 	{
+		//Attach to Player
 		SetActorLocation(myPlayerAttachPoint->GetComponentLocation());
 		SetActorRotation(myPlayer->GetActorRotation());
 		SetActorEnableCollision(false);
