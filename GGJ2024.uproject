@@ -1,6 +1,6 @@
 {
 	"FileVersion": 3,
-	"EngineAssociation": "{BFEFE97D-4207-ADB4-5463-B6AB0D742814}",
+	"EngineAssociation": "{E3C80EE2-4B53-C6FC-4239-429F0559FAA6}",
 	"Category": "",
 	"Description": "",
 	"Modules": [
@@ -24,6 +24,13 @@
 		{
 			"Name": "TextToSpeech",
 			"Enabled": true
+		},
+		{
+			"Name": "WinDualShock",
+			"Enabled": true,
+			"SupportedTargetPlatforms": [
+				"Win64"
+			]
 		}
 	]
 }
