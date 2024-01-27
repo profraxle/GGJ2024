@@ -23,7 +23,6 @@ void APickupObject::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 	if (myPlayer)
 	{
-
 		SetActorLocation(myPlayerAttachPoint->GetComponentLocation());
 		SetActorRotation(myPlayer->GetActorRotation());
 		SetActorEnableCollision(false);

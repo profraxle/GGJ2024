@@ -88,12 +88,12 @@ void APlayerCharacter::OnComponentHit(UPrimitiveComponent* HitComp, AActor* Othe
 		if (OtherActor->ActorHasTag("Item"))
 		{
 			APickupObject* item = Cast<APickupObject>(OtherActor);
-			if (item->myPlayer == nullptr)
+			if (item->myPlayer == nullptr && !holdingObject)
 			{
 				item->myPlayerAttachPoint = AttachPoint;
 				item->myPlayer = this;
+				holdingObject = true;
 			}
-			//OtherActor->Destroy();
 		}
 	}
 }
