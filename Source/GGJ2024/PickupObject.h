@@ -19,14 +19,19 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-	UPROPERTY(EditAnywhere)
-	FString funny;
+//	UPROPERTY(EditAnywhere)
+//	FString funny;
 
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
 	//Getting Picked Up
+	UPROPERTY(EditAnywhere)
 	AActor* myPlayer;						//The Player
 	USceneComponent* myPlayerAttachPoint;	//The Players Attach Point
+	AActor* myCart;							//The Cart
+
+	float cartHeight;
+	bool care;
 };
