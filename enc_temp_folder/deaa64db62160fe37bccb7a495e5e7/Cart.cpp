@@ -46,23 +46,19 @@ void ACart::Tick(float DeltaTime)
 void ACart::OnComponentHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
 {
 	if (OtherActor->ActorHasTag("Item"))
-	{
+	{	
+		arrayTotal = collectedItems.Num();
+		currentItem = OtherActor;
 		APickupObject* item = Cast<APickupObject>(OtherActor);
-		//if (item->isBeingCarried == true)
-	//	{
-			arrayTotal = collectedItems.Num();
-			currentItem = OtherActor;
-			item->myCart = this;
+		item->myCart = this;
+		item->isBeingCarried = false;
 
-			if (item->care)
-			{
-				collectedItems.Add(item);
-				item->care = false;
-			}
-	//	}
-
-
-
+		if (item->care)
+		{
+			collectedItems.Add(item);
+			currentHeight += 20.f;
+			item->care = false;
+		}
 
 	}
 }

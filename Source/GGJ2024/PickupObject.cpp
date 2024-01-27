@@ -25,27 +25,37 @@ void APickupObject::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 	//If im picked up
-	if (myPlayer && !myCart)
+	if (myPlayer)
 	{
+		SetActorEnableCollision(false);
+		isBeingCarried = true;
 		//Attach to Player
 		SetActorLocation(myPlayerAttachPoint->GetComponentLocation());
 		SetActorRotation(myPlayer->GetActorRotation());
-		SetActorEnableCollision(false);
 	}
 	else {
 		//Add collision back if YOU ARE A DUMB BASS RAAAAAAAAAAAAAAAAAAAAAAAGH
 		SetActorEnableCollision(true);
+		isBeingCarried = false;
 	}
 
 	//Deposit
 	if (myCart)
 	{
-		SetActorHiddenInGame(true);
-		ACart* cart = Cast<ACart>(myCart);
-		//Attach to Player
-		SetActorLocation(FVector(cart->GetActorLocation().X, cart->GetActorLocation().Y, cart->GetActorLocation().Z + cart->GetHeight()));
-		SetActorRotation(cart->GetActorRotation());
 		SetActorEnableCollision(false);
+		isBeingCarried = false;
+		ACart* cart = Cast<ACart>(myCart);
+
+		if (getHeight)
+		{
+			cartHeight = cart->GetHeight() * 40.f;
+			getHeight = false;
+		}
+
+		//Attach to Player
+		SetActorLocation(FVector(cart->GetActorLocation().X, cart->GetActorLocation().Y, cart->GetActorLocation().Z + cartHeight));
+		SetActorRotation(cart->GetActorRotation());
+
 	}
 }
 

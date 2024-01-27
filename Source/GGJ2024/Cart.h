@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "Components/BoxComponent.h"
 #include "GameFramework/Actor.h"
+#include "PickupObject.h"
 #include "Cart.generated.h"
 
 UCLASS()
@@ -24,12 +25,11 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-	//Array of the items collected
-	TArray<AActor*> collectedItems;
-
 
 
 	float currentHeight = 40.f;
+
+	int arrayTotal;
 
 public:	
 	// Called every frame
@@ -42,4 +42,7 @@ public:
 	
 	UPROPERTY(EditAnywhere,BlueprintReadWrite)
 	AActor* currentItem;
+
+	//Array of the items collected
+	TArray<AActor*> collectedItems;
 };
