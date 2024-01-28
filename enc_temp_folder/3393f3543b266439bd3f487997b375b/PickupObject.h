@@ -30,8 +30,6 @@ public:
 	UPROPERTY(EditAnywhere)
 	AActor* myPlayer;						//The Player
 	USceneComponent* myPlayerAttachPoint;	//The Players Attach Point
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	AActor* myCart;							//The Cart
 
 	bool isBeingCarried = false;
