@@ -45,9 +45,11 @@ void ACart::Tick(float DeltaTime)
 //Collision With Another Collision Box (i guess it doesnt have to be a box but whatever)
 void ACart::OnComponentHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
 {
-	if (OtherActor->ActorHasTag("Item") && collectedItems.Num() < 4)
+	if (OtherActor->ActorHasTag("Item"))
 	{
 		APickupObject* item = Cast<APickupObject>(OtherActor);
+		//if (item->isBeingCarried == true)
+	//	{
 			arrayTotal = collectedItems.Num();
 			currentItem = OtherActor;
 			item->myCart = this;
@@ -57,6 +59,11 @@ void ACart::OnComponentHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPr
 				collectedItems.Add(item);
 				item->care = false;
 			}
+	//	}
+
+
+
+
 	}
 }
 
