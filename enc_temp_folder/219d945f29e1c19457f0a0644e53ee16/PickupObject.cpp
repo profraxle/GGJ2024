@@ -42,6 +42,7 @@ void APickupObject::Tick(float DeltaTime)
 	//Deposit
 	if (myCart)
 	{
+
 		SetActorEnableCollision(false);
 		isBeingCarried = false;
 		ACart* cart = Cast<ACart>(myCart);
@@ -52,10 +53,15 @@ void APickupObject::Tick(float DeltaTime)
 			getHeight = false;
 		}
 
-		//Attach to Player
+		//Attach to Cart
 		SetActorLocation(FVector(cart->GetActorLocation().X, cart->GetActorLocation().Y, cart->GetActorLocation().Z + cartHeight));
 		SetActorRotation(cart->GetActorRotation());
 
+		//cache word
+		if (wordHasBeenCached == 2)
+		{
+			wordHasBeenCached = 1;
+		}
 	}
 }
 
