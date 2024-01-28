@@ -52,7 +52,7 @@ void APickupObject::Tick(float DeltaTime)
 			getHeight = false;
 		}
 
-		//Attach to Player	
+		//Attach to Player
 		SetActorLocation(FVector(cart->GetActorLocation().X, cart->GetActorLocation().Y, cart->GetActorLocation().Z + cartHeight));
 		SetActorRotation(cart->GetActorRotation());
 
